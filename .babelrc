@@ -1,0 +1,20 @@
+{
+  "plugins": [
+    ["@babel/plugin-transform-runtime", {
+      "corejs": "3"
+    }],
+    "@babel/plugin-syntax-dynamic-import"
+  ],
+  "presets": [
+    ["@babel/preset-env",
+      {
+        "targets": {
+          "ie": "11"
+        },
+        "corejs": "3",
+        "useBuiltIns": "entry"
+      }
+    ]
+  ],
+  "sourceType": "unambiguous"
+}
