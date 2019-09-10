@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import routes from './src/pages'
 import envs from './src/envs'
 import serverMiddleware  from './src/server'
@@ -10,7 +11,6 @@ const optionsBabel = {
 export default {
   serverMiddleware,
   mode: 'universal',
-  
   srcDir: 'src',
   middleware: 'stats',
   /*
@@ -37,39 +37,21 @@ export default {
           component: resolve(__dirname, route.component)
         }
       }))
-    },
-    scrollBehavior: () => {
-      return { x: 0, y: 0 }
     }
   },
-
-  /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
-  /*
-  ** Global CSS
-  */
-  css: [
+  modules: [
+    '@nuxtjs/style-resources',
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
+  styleResources: {
+    scss: [
+      resolve(__dirname, 'src/sass/main.scss')
+    ]
+  },
+  loading: { color: '#fff' },
   plugins: [
   ],
-  /*
-  ** Nuxt.js dev-modules
-  */
   buildModules: [
   ],
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
-  ],
-  /*
-  ** Build configuration
-  */
   build: {
     optimizeCSS: true,
     cssSourceMap: false,

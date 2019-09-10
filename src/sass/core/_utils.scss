@@ -1,0 +1,99 @@
+/*
+  # Layout
+*/
+
+@include generate_padding_margins();
+
+@include generate-color-helper();
+
+.clearfix {
+  @include clearfix();
+}
+
+.iblock {
+  @include inline-block;
+}
+
+.block {
+  display: block;
+}
+
+.dnone {
+  display: none;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+/*
+  # Text and links
+*/
+
+@each $name, $size in $text-size {
+  .text-#{$name} {
+    font-size: $size;
+  }
+}
+
+.text-default {
+  p {
+    font-size: map-get($text-size, single);
+    line-height: 1.6em;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.line-default {
+	line-height: 1.4em;
+}
+
+.text-under {
+  text-decoration: underline;
+}
+
+.text-upper {
+  text-transform: uppercase;
+}
+
+.cpointer {
+  cursor: pointer;
+}
+
+/*
+  ## Fonts
+*/
+
+@mixin font($number) {
+  font-family: map-get($fonts-family, $number);
+  font-display: swap;
+}
+
+@each $value, $font in $fonts-family {
+  .font-#{$value} {
+    @include font($value);
+  }
+}
+
+.bold-700 {
+  font-weight: 700;
+}
+
+.bold-900, strong {
+  font-weight: 900;
+}

@@ -1,0 +1,57 @@
+/* 
+  ## Config
+*/
+
+$path-image: '~/assets/img/';
+
+/* 
+  ## Colors 
+*/
+
+$palette-colors: (
+  white100: #fff,
+  black100: #000
+);
+
+/*
+  ## Layout
+*/
+
+$breakpoint-container: 1280px;
+$breakpoint-large: 960px;
+$breakpoint-medium: 760px;
+$breakpoint-small: 640px;
+$height-header: 80px;
+
+/*
+  ## Text Size
+*/
+
+$text-size: (
+  title: 30px,
+  large: 24px,
+  medium: 20px,
+  small: 18px,
+  single: 16px,
+  base: 14px
+);
+
+/*
+  ## Fonts family
+*/
+$fonts-family: (
+  1: ('Lato', sans-serif)
+);
+
+/*
+  ## Padding / Margin
+*/
+
+$padding-margin-sizes: (
+  0: 0,
+  10: 10px,
+  20: 20px,
+  30: 30px,
+  40: 40px,
+  50: 50px
+);

@@ -1,0 +1,269 @@
+// Mixins and examples
+
+/* Responsive Breakpoints
+========================================================================== */
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "container" {
+    @media (max-width: $breakpoint-container) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == "small" {
+    @media (max-width: $breakpoint-small) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "medium" {
+    @media (max-width: $breakpoint-medium) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "large" {
+    @media (max-width: $breakpoint-large) {
+      @content;
+    }
+  }
+}
+
+/* 
+  ## Usage
+
+  .page-wrap {
+    width: 75%;
+    @include breakpoint(large) { width: 60%; }
+    @include breakpoint(medium) { width: 80%; }
+    @include breakpoint(small) { width: 95%; }
+  }
+
+*/
+
+/* Margin / Padding
+    ========================================================================== */
+
+@mixin generate_padding_margins() {
+  @each $rule in padding, margin {
+    $rule-prefix: str-slice($rule, 0, 1);
+
+    @each $direction in "", -top, -right, -bottom, -left {
+      $direction-prefix: str-slice($direction, 2, 2);
+
+      @each $size-name, $size in $padding-margin-sizes {
+        $class-name: $rule-prefix + $direction-prefix + $size-name;
+        $rule-name: $rule + $direction;
+
+        .#{$class-name} {
+          #{$rule-name}: $size;
+        }
+      }
+    }
+  }
+}
+
+/* Colors
+    ========================================================================== */
+@mixin generate-color-helper() {
+  @each $color, $value in $palette-colors {
+    .color-ft-#{$color} {
+      color: $value;
+    }
+
+    .color-bg-#{$color} {
+      background-color: $value;
+    }
+  }
+} 
+
+/* Sub-section comment block
+    ========================================================================== */
+
+@mixin image-2x($image, $width, $height) {
+  @media (min--moz-device-pixel-ratio: 1.3),
+          (-o-min-device-pixel-ratio: 2.6/2),
+          (-webkit-min-device-pixel-ratio: 1.3),
+          (min-device-pixel-ratio: 1.3),
+          (min-resolution: 1.3dppx) {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url($image);
+    background-size: $width $height;
+  }
+}
+
+/* 
+  ## Usage 
+
+  div.logo {
+    background: url("logo.png") no-repeat;
+    @include image-2x("logo2x.png", 100px, 25px);
+  }
+
+  */
+
+/* Clearfix
+  ========================================================================== */
+
+@mixin clearfix() {
+  & {
+    *zoom: 1;
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+/* 
+  ## Usage 
+
+  .article {
+    @include clearfix();
+  }
+
+*/
+
+/* Box Model
+  ========================================================================== */
+
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model;
+      -moz-box-sizing: $box-model;
+          box-sizing: $box-model;
+}
+
+/* 
+  ## Usage
+
+  *,
+  *:after,
+  *:before {
+    @include box-sizing(border-box);
+  }
+
+*/
+
+/* Opacity
+  ========================================================================== */
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+/* 
+  ## Usage
+
+  .article-heading {
+    @include opacity(0.8);
+  }
+
+*/
+
+/* Cross browser inline block
+  ========================================================================== */
+
+@mixin inline-block() {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  zoom: 1;
+  *display: inline;
+}
+
+/* 
+  ## Usage 
+
+  .icon {
+    @include inline-block();
+  }
+
+*/
+
+/* Text replacement (instead of text-indent)
+  ========================================================================== */
+
+@mixin text-replacement() {
+  border: 0;
+  color: transparent;
+  font: 0/0 a;
+  text-shadow: none;
+}
+
+/* 
+  ## Usage
+
+  .header h1 {
+    @include text-replacement();
+  }
+
+*/
+
+/* Placeholder
+  ========================================================================== */
+
+@mixin placeholder-color($color){
+  &.placeholder{
+    color: $color
+  }
+
+  &:-moz-placeholder{
+    color: $color
+  }
+    
+  &::-webkit-input-placeholder{
+    color: $color
+  }
+
+  &:-ms-input-placeholder{
+    color: $color
+  }
+}
+
+/* 
+  ## Usage
+
+  input{
+    @include placeholder-color(#FA4A4A)
+  }
+
+*/
+
+/* Gradient
+  ========================================================================== */
+
+@mixin linearGradient($top, $bottom){
+  background: $top; /* Old browsers */
+  background: -moz-linear-gradient(top,  $top 0%, $bottom 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $top 0%,$bottom 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $top 0%,$bottom 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $top 0%,$bottom 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  $top 0%,$bottom 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+
+/* Transition
+  ========================================================================== */
+
+@mixin transition($transition...) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+/* Background image
+  ========================================================================== */
+
+@mixin background($image, $option: 'no-repeat') {
+  background: url('#{$path-image}#{$image}') #{$option};
+}
