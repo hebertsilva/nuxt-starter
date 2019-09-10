@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import routes from './src/pages'
 import envs from './src/envs'
-import serverMiddleware  from './src/server'
+import serverMiddleware from './src/server'
 
 const optionsBabel = {
   useBuiltIns: 'entry',
@@ -40,7 +40,7 @@ export default {
     }
   },
   modules: [
-    '@nuxtjs/style-resources',
+    '@nuxtjs/style-resources'
   ],
   styleResources: {
     scss: [
@@ -58,7 +58,7 @@ export default {
     extractCSS: false,
     cache: true,
     publicPath: envs.PUBLIC_PATH,
-    extend(config, ctx) {
+    extend (config, ctx) {
       // Test
       config.node = {
         fs: 'empty'
@@ -74,7 +74,7 @@ export default {
     },
     babel: {
       babelrc: true,
-      presets({ isServer }) {
+      presets ({ isServer }) {
         return [
           ['@nuxt/babel-preset-app', optionsBabel]
         ]
