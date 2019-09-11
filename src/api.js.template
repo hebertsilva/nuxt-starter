@@ -1,0 +1,18 @@
+/* eslint-disable */
+export default function (store) {
+  return {<% const resources = Object.keys(options.api)
+    resources.forEach((resource) => { %><%= `\n  ${resource}` %>: {<%
+      const methods = Object.keys(options.api[resource])
+      methods.forEach((method, m) => { %>
+      <%= method %>: (payload, shouldDispatch = true) => {
+        return store.dispatch('api', {
+          apiMethod: '<%= resource %>.<%= method %>',
+          payload,
+          shouldDispatch
+        }, {
+          root: true
+        })
+      },<% }) %>
+    },<% }) %>
+  }
+}

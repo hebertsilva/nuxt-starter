@@ -3,6 +3,20 @@ import routes from './src/pages'
 import envs from './src/envs'
 import serverMiddleware from './src/server'
 
+function getAPITree () {
+  const api = require(resolve(__dirname, 'src/server/resources'))
+  return Object.keys(api.default)
+    .reduce((rObj, resource) => {
+      return {
+        ...rObj,
+        [resource]: Object.keys(api.default[resource])
+          .reduce((mObj, method) => {
+            return { ...mObj, [method]: true }
+          }, {})
+      }
+    }, {})
+}
+
 const optionsBabel = {
   useBuiltIns: 'entry',
   targets: { ie: 11 }
@@ -49,6 +63,7 @@ export default {
   },
   loading: { color: '#fff' },
   plugins: [
+    '~/plugins/api'
   ],
   buildModules: [
   ],
@@ -58,6 +73,11 @@ export default {
     extractCSS: false,
     cache: true,
     publicPath: envs.PUBLIC_PATH,
+    templates: [{
+      options: { api: getAPITree() },
+      src: './src/api.js.template',
+      dst: `../src/api.js`
+    }],
     extend (config, ctx) {
       // Test
       config.node = {
