@@ -17,9 +17,9 @@ export default async function (req, res, next) {
   const apiMethod = req.url.match(/^\/api\/([^?]+)\??/)[1]
 
   // Auth validations
-  if (!(await request.validate(req, res, apiMethod))) {
-    return write.unauthorized(res)
-  }
+  // if (!(await request.validate(req, res, apiMethod))) {
+  //   return write.unauthorized(res)
+  // }
 
   // Actually perform the backend request
   const response = await request(req, res, apiMethod)

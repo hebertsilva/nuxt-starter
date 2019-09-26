@@ -3,7 +3,7 @@ import client from './client'
 import genHeaders from './headers'
 import { api, DISABLE_CACHE } from './config'
 import { base64Serialize, getRemoteAddress } from './utils'
-import recaptcha from './recaptcha'
+// import recaptcha from './recaptcha'
 
 function translatePath (path) {
   // Convert list-siblings to listSiblings
@@ -22,14 +22,14 @@ function translatePath (path) {
   }
 }
 
-request.validate = async function (req, res, apiMethod) {
-  // Recaptcha check, see ./recaptcha.js
-  if (!(await recaptcha(req, res, apiMethod))) {
-    return false
-  }
+// request.validate = async function (req, res, apiMethod) {
+//   // Recaptcha check, see ./recaptcha.js
+//   if (!(await recaptcha(req, res, apiMethod))) {
+//     return false
+//   }
 
-  return true
-}
+//   return true
+// }
 
 function genRequest (req, res, apiMethod) {
   // eslint-disable-next-line prefer-const
@@ -58,6 +58,8 @@ export default async function request (req, res, apiMethod) {
   const { resource, method, payload, config } = apiRequest
   const request = { payload, config }
   const proxy = payload.proxy
+
+  console.log('### genRequest =->', genRequest)
 
   let response
 

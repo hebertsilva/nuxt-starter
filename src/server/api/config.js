@@ -1,20 +1,20 @@
 import envs from '../../envs'
-import { withListRecaptcha } from '../../utils/recaptcha'
+// import { withListRecaptcha } from '../../utils/recaptcha'
 import resourcers from './../resources'
 
 // Disable Redis caching (for debugging)
-export const DISABLE_CACHE = true
+export const DISABLE_CACHE = false
 
 // Load generate resourcers for template API
 export const api = resourcers
 
 // Config recaptcha Google
-export const recaptcha = {
-  url: 'https://www.google.com/',
-  secret: envs.CAPTCHA_SECRET_KEY,
-  enable: false,
-  paths: withListRecaptcha
-}
+// export const recaptcha = {
+//   url: 'https://www.google.com/',
+//   secret: envs.CAPTCHA_SECRET_KEY,
+//   enable: false,
+//   paths: withListRecaptcha
+// }
 
 // Secrets keys
 export const secrets = {

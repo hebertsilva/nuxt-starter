@@ -35,9 +35,11 @@ export default async function (
       'Content-Type': 'application/json'
     }
 
-    if (state.store.csrf) {
-      headersData['csrf-token'] = state.store.csrf
-    }
+    // if (state.store.csrf) {
+    //   headersData['csrf-token'] = state.store.csrf
+    // }
+
+    console.log('## resource =>', resource)
 
     // Create request client-side
     const response = await this.$axios.request({
@@ -72,6 +74,7 @@ export default async function (
 
     return Promise.resolve({ response, data })
   } catch (err) {
+    console.log('## err =>', err)
     commit('setErrors', { [apiMethod]: err })
   }
 }

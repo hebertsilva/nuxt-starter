@@ -61,6 +61,10 @@ export default {
       resolve(__dirname, 'src/sass/main.scss')
     ]
   },
+  axios: {
+    credentials: true,
+    baseURL: envs.API_PROXY_BASE
+  },
   loading: { color: '#fff' },
   plugins: [
     '~/plugins/api'
