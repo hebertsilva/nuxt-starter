@@ -59,8 +59,6 @@ export default async function request (req, res, apiMethod) {
   const request = { payload, config }
   const proxy = payload.proxy
 
-  console.log('### genRequest =->', genRequest)
-
   let response
 
   if (!DISABLE_CACHE && api[resource][method].ttl) {
