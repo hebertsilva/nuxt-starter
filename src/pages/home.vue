@@ -36,7 +36,7 @@ export default {
     Logo
   }
   // async mounted () {
-    // const teste = await this.$api.example.example()
+  // const teste = await this.$api.example.example()
   // }
 }
 </script>
