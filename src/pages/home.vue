@@ -36,8 +36,7 @@ export default {
     Logo
   },
   async mounted () {
-    const teste = await this.$api.example.example()
-    console.log('### teste =>', teste)
+    // const teste = await this.$api.example.example()
   }
 }
 </script>
