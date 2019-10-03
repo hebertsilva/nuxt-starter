@@ -27,9 +27,6 @@ export default {
   mode: 'universal',
   srcDir: 'src',
   middleware: 'stats',
-  /*
-  ** Headers of the page
-  */
   head: {
     title: process.env.npm_package_name || '',
     meta: [
