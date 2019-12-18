@@ -33,7 +33,7 @@ function translatePath (path) {
 
 function genRequest (req, res, apiMethod) {
   // eslint-disable-next-line prefer-const
-  let [ resource, method ] = apiMethod.split('/')
+  let [resource, method] = apiMethod.split('/')
   method = translatePath(method)
 
   const payload = req.body.payload

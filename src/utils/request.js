@@ -23,7 +23,7 @@ export default async function (
   commit('setRequestActive', apiMethod)
 
   try {
-    const [ resource, method ] = apiMethod.split('.')
+    const [resource, method] = apiMethod.split('.')
     const apiPath = translateMethodToPath(method)
     const requestData = {}
 
