@@ -3,5 +3,5 @@ import api from './api'
 
 export default [
   json,
-  api
+  { path: '/api', handler: api }
 ]
