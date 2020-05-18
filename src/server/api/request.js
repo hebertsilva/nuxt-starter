@@ -1,8 +1,7 @@
 import consola from 'consola'
 import client from './client'
-import genHeaders from './headers'
 import { api, DISABLE_CACHE } from './config'
-import { base64Serialize, getRemoteAddress } from './utils'
+import { base64Serialize } from './utils'
 // import recaptcha from './recaptcha'
 
 function translatePath (path) {
@@ -31,33 +30,28 @@ function translatePath (path) {
 //   return true
 // }
 
-function genRequest (req, res, apiMethod) {
+function genRequest (req, apiMethod) {
   // eslint-disable-next-line prefer-const
   let [resource, method] = apiMethod.split('/')
   method = translatePath(method)
 
   const payload = req.body.payload
-  const params = {
-    ip: getRemoteAddress(req),
-    userAgent: req.headers['user-agent']
+  const headers = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json'
   }
-  const config = { params }
+  const params = {}
+  const config = { params, headers }
 
-  // Inject params in case of GET requests
-  if (payload[0] && payload[0].params) {
-    Object.assign(config.params, payload[0].params)
-  }
-
-  config.headers = genHeaders(req)
   return { resource, method, config, payload }
 }
-
 export default async function request (req, res, apiMethod) {
   // Generate API request config
-  const apiRequest = genRequest(req, res, apiMethod)
+  const apiRequest = genRequest(req, apiMethod)
   const { resource, method, payload, config } = apiRequest
   const request = { payload, config }
-  const proxy = payload.proxy
+  // const baseUrl = servicesApi[resource]
+  const baseUrl = ''
 
   let response
 
@@ -71,13 +65,13 @@ export default async function request (req, res, apiMethod) {
       consola.info(`Cached: ${resource}.${method}(${payload})`)
       response = cachedResponse
     } else {
-      response = await api[resource][method](client(proxy), request, req, res)
+      response = await api[resource][method](client(baseUrl), request, req, res)
       const cachePayload = { status: response.status, data: response.data }
       res.redis.setJSON(cacheId, cachePayload, api[resource][method].ttl * 60)
     }
   } else {
     // Request fresh record otherwise
-    response = await api[resource][method](client(proxy), request, req, res)
+    response = await api[resource][method](client(baseUrl), request, req, res)
   }
 
   return response

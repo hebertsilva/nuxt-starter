@@ -1,21 +1,28 @@
-/*
-  # Layout
-*/
-
+// Layout
 @include generate_padding_margins();
 
 @include generate-color-helper();
+
+@mixin container ($name, $value) {
+  .container-#{$name} {
+    max-width: $value;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+}
+
+@include container('medium', $breakpoint-medium);
 
 .clearfix {
   @include clearfix();
 }
 
-.iblock {
-  @include inline-block;
+.dblock {
+  display: block;
 }
 
-.block {
-  display: block;
+.diblock {
+  @include inline-block;
 }
 
 .dnone {
@@ -30,10 +37,7 @@
 	float: right;
 }
 
-/*
-  # Text and links
-*/
-
+// Typography
 @each $name, $size in $text-size {
   .text-#{$name} {
     font-size: $size;
@@ -55,6 +59,14 @@
 	text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
 .text-italic {
   font-style: italic;
 }
@@ -71,14 +83,7 @@
   text-transform: uppercase;
 }
 
-.cpointer {
-  cursor: pointer;
-}
-
-/*
-  ## Fonts
-*/
-
+// Fonts
 @mixin font($number) {
   font-family: map-get($fonts-family, $number);
   font-display: swap;
@@ -90,10 +95,3 @@
   }
 }
 
-.bold-700 {
-  font-weight: 700;
-}
-
-.bold-900, strong {
-  font-weight: 900;
-}
