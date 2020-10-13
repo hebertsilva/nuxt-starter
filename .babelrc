@@ -1,7 +1,8 @@
 {
   "plugins": [
     ["@babel/plugin-transform-runtime", {
-      "corejs": "3"
+      "absoluteRuntime": false,
+      "corejs": 3
     }],
     "@babel/plugin-syntax-dynamic-import"
   ],
@@ -9,12 +10,21 @@
     ["@babel/preset-env",
       {
         "targets": {
-          "ie": "11"
+          "ie": 11
         },
-        "corejs": "3",
+        "corejs": 3,
         "useBuiltIns": "entry"
       }
-    ]
+    ],
+    ["@nuxt/babel-preset-app", {
+      "useBuiltIns": "entry",
+      "targets": {
+        "ie": 11
+      },
+      "corejs": {
+        "version": 3
+      }
+    }]
   ],
   "sourceType": "unambiguous"
 }

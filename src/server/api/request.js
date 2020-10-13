@@ -1,8 +1,5 @@
-import consola from 'consola'
 import client from './client'
-import { api, DISABLE_CACHE } from './config'
-import { base64Serialize } from './utils'
-// import recaptcha from './recaptcha'
+import { api, secrets } from './config'
 
 function translatePath (path) {
   // Convert list-siblings to listSiblings
@@ -21,15 +18,6 @@ function translatePath (path) {
   }
 }
 
-// request.validate = async function (req, res, apiMethod) {
-//   // Recaptcha check, see ./recaptcha.js
-//   if (!(await recaptcha(req, res, apiMethod))) {
-//     return false
-//   }
-
-//   return true
-// }
-
 function genRequest (req, apiMethod) {
   // eslint-disable-next-line prefer-const
   let [resource, method] = apiMethod.split('/')
@@ -38,41 +26,22 @@ function genRequest (req, apiMethod) {
   const payload = req.body.payload
   const headers = {
     'Content-Type': 'application/json',
-    Accept: 'application/json'
+    Accept: 'application/json',
+    userAgent: req.headers['user-agent'],
+    Date: new Date().toISOString()
   }
+
   const params = {}
   const config = { params, headers }
-
   return { resource, method, config, payload }
 }
+
 export default async function request (req, res, apiMethod) {
-  // Generate API request config
   const apiRequest = genRequest(req, apiMethod)
-  const { resource, method, payload, config } = apiRequest
+  const { resource, method, config, payload } = apiRequest
   const request = { payload, config }
-  // const baseUrl = servicesApi[resource]
-  const baseUrl = ''
+  const baseUrl = secrets.baseUrlApi
 
-  let response
-
-  if (!DISABLE_CACHE && api[resource][method].ttl) {
-    // Check Redis cache entry if ttl is set
-    // Important: Redis based has installed
-    const cacheId = `${resource}-${method}-${base64Serialize(payload)}`
-    const cachedResponse = await res.redis.getJSON(cacheId)
-
-    if (cachedResponse) {
-      consola.info(`Cached: ${resource}.${method}(${payload})`)
-      response = cachedResponse
-    } else {
-      response = await api[resource][method](client(baseUrl), request, req, res)
-      const cachePayload = { status: response.status, data: response.data }
-      res.redis.setJSON(cacheId, cachePayload, api[resource][method].ttl * 60)
-    }
-  } else {
-    // Request fresh record otherwise
-    response = await api[resource][method](client(baseUrl), request, req, res)
-  }
-
-  return response
+  
+  return await api[resource][method](client(baseUrl), request, req, res)
 }

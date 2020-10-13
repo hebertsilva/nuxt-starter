@@ -24,7 +24,7 @@ const optionsBabel = {
 
 export default {
   serverMiddleware,
-  mode: 'universal',
+  ssr: true,
   srcDir: 'src',
   middleware: 'stats',
   head: {
@@ -94,12 +94,7 @@ export default {
       }
     },
     babel: {
-      babelrc: true,
-      presets ({ isServer }) {
-        return [
-          ['@nuxt/babel-preset-app', optionsBabel]
-        ]
-      }
+      babelrc: true
     },
     transpile: [
       'dotenv'

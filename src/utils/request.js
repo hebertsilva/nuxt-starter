@@ -1,3 +1,5 @@
+// import { resourcePermission } from './recaptcha'
+
 // translateMethodToPath converts a string like
 // service.doSomething() to service/do-something, so
 // that it can be picked up by the API middleware in server/index.js
@@ -15,6 +17,14 @@ export function getData (response) {
   }
 }
 
+// async function getRecaptchaToken (key) {
+//   const grecaptcha = window.grecaptcha
+
+//   return await grecaptcha.execute(key, {
+//     action: 'submit'
+//   }).then(token => token)
+// }
+
 export default async function (
   { commit, dispatch, state },
   { apiMethod, payload, shouldDispatch = true }
@@ -28,6 +38,11 @@ export default async function (
     const requestData = {}
 
     requestData.payload = payload || {}
+
+    // // recaptcha client-side
+    // if (resourcePermission.includes(resource)) {
+    //   requestData.tokenRecaptcha = await getRecaptchaToken(state.keys.recaptcha)
+    // }
 
     // Create request client-side
     const response = await this.$axios.request({

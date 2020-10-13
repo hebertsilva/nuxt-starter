@@ -19,7 +19,7 @@ export const api = resourcers
 // Secrets keys
 export const secrets = {
   session: envs.SESSION_SECRET,
-  apiBase: envs.API_BASE,
+  baseUrlApi: envs.API_BASE,
   siteUrl: envs.SITE_URL,
   appId: envs.APP_ID,
   appSecret: envs.APP_SECRET
