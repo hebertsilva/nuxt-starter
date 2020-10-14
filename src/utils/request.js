@@ -1,3 +1,5 @@
+// import { resourcePermission } from './recaptcha'
+
 // translateMethodToPath converts a string like
 // service.doSomething() to service/do-something, so
 // that it can be picked up by the API middleware in server/index.js
@@ -29,44 +31,40 @@ export default async function (
 
     requestData.payload = payload || {}
 
-    // Defaults headers request
-    const headersData = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-
     // Create request client-side
     const response = await this.$axios.request({
       url: `${resource}/${apiPath}`,
       method: 'POST',
-      headers: headersData,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       data: requestData,
       validateStatus: (status) => {
         return status >= 200 && status < 500
       }
     })
 
-    if (response.status === 403 && process.client) {
-      this.app.$nuxt.error({ statusCode: 403 })
-      return
+    if (response.status === 403) {
+      return Promise.resolve({ ...response })
+    } else {
+      const { data, status } = response
+
+      // Dispatch request action
+      const dispatchPayload = { payload, data, status }
+      const actionHandler = `${resource}/${method}`
+      if (this.hasActionHandler(actionHandler) && shouldDispatch) {
+        await dispatch(actionHandler, dispatchPayload)
+      }
+
+      if (status === 400) {
+        commit('setErrors', { [apiMethod]: data })
+      }
+
+      commit('setRequestDone', apiMethod)
+
+      return Promise.resolve({ data, status })
     }
-
-    const data = getData(response)
-
-    // Dispatch Request Action
-    const dispatchPayload = { payload, response, data }
-    const actionHandler = `${resource}/${method}`
-    if (this.hasActionHandler(actionHandler) && shouldDispatch) {
-      await dispatch(actionHandler, dispatchPayload)
-    }
-
-    if (response.status === 400) {
-      commit('setErrors', { [apiMethod]: data })
-    }
-
-    commit('setRequestDone', apiMethod)
-
-    return Promise.resolve({ response, data })
   } catch (err) {
     commit('setErrors', { [apiMethod]: err })
   }

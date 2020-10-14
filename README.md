@@ -1,6 +1,6 @@
-# nuxt-starter
+# Nuxt Boilerplate (Server render)
 
-> Simple Nuxt stater project
+> Boilerplate Nuxt mode server with request API from Client (Proxy)
 
 ## Setup
 
@@ -14,23 +14,32 @@ $ yarn dev
 # build for production and launch server
 $ yarn build
 $ yarn start
+```
 
-# generate static project
-$ yarn generate
+## Usage Base Api
+
+Use request from API
+
+> After the Request, the action `'resource/method'` is executed, can be canceled by passing the parameter `shouldDispatch`. _Example: await this.$api.[resource][method](payload, shouldDispatch)_
+
+```js
+  const { data, status } = await this.$api.[resource][method](payload) // ex: this.$api.user.me({ id: 123 })
+```
+
+Use request from Store
+
+```js
+  await this.$store.$api[resource][method](payload) // ex: this.$store.$api.user.me({ id: 123 })
 ```
 
 # Environment variable
 
-Create file `.env` at project root
+Create file `.env` at project root or edit `/src/envs.js`
 
 ```bash
-  SESSION_SECRET=<secret_token>
-  API_BASE=<url_api>
-  SITE_URL=<url_public_site>
-  APP_ID=<app_token>
-  APP_SECRET=<secret_token>
+  SITE_URL=<url_site>
+  BASE_URL_API=<url_api>
+  BASE_URL_PROXY=<url_proxy>/api
 ```
-
-Set variablen in file `src/env.js`
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

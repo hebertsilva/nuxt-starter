@@ -1,10 +1,12 @@
 import axios from 'axios'
-import { secrets } from './config'
 
-// Client default by request API
-export default (proxy = null) => {
+export default (baseURL) => {
+  if (!baseURL) {
+    return undefined
+  }
+
   return axios.create({
-    baseURL: proxy || secrets.apiBase,
+    baseURL,
     headers: {},
     validateStatus (status) {
       return status >= 200 && status <= 600
