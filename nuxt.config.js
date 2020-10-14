@@ -17,16 +17,10 @@ function getAPITree () {
     }, {})
 }
 
-const optionsBabel = {
-  useBuiltIns: 'entry',
-  targets: { ie: 11 }
-}
-
 export default {
   serverMiddleware,
   ssr: true,
   srcDir: 'src',
-  middleware: 'stats',
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -38,10 +32,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
   router: {
     middleware: 'stats',
-    extendRoutes: (nuxtRoutes, resolve) => {
+    extendRoutes (nuxtRoutes, resolve) {
       nuxtRoutes.splice(0, nuxtRoutes.length, ...routes.map((route) => {
         return {
           ...route,
@@ -67,25 +60,27 @@ export default {
     '~/plugins/api'
   ],
   buildModules: [
+    ['@nuxtjs/dotenv', {
+      systemvars: true,
+      path: ''
+    }]
   ],
   build: {
     optimizeCSS: true,
     cssSourceMap: false,
-    extractCSS: false,
+    extractCSS: false, // false
     cache: true,
-    publicPath: envs.PUBLIC_PATH,
     templates: [{
       options: { api: getAPITree() },
       src: './src/api.js.template',
-      dst: `../src/api.js`
+      dst: '../src/api.js'
     }],
-    extend (config, ctx) {
-      // Test
+    extend (config, { isClient }) {
       config.node = {
         fs: 'empty'
       }
 
-      if (ctx.isClient) {
+      if (isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

@@ -40,8 +40,7 @@ export default async function request (req, res, apiMethod) {
   const apiRequest = genRequest(req, apiMethod)
   const { resource, method, config, payload } = apiRequest
   const request = { payload, config }
-  const baseUrl = secrets.baseUrlApi
+  const baseUrl = secrets.baseUrl
 
-  
   return await api[resource][method](client(baseUrl), request, req, res)
 }

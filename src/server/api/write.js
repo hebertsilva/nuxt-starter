@@ -1,5 +1,4 @@
 import { secrets } from './config'
-const { SITE_URL } = secrets
 
 function defaultResponse (res, data, status) {
   res.setHeader('Accept', 'application/json')
@@ -13,7 +12,7 @@ function defaultResponse (res, data, status) {
 export default {
   default: defaultResponse,
   options (res) {
-    res.setHeader('Access-Control-Allow-Origin', SITE_URL)
+    res.setHeader('Access-Control-Allow-Origin', secrets.siteUrl)
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader(
       'Access-Control-Allow-Headers',

@@ -16,7 +16,6 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/style-resources": "^1.0.0",
-    "aws-amplify": "^3.3.3",
     "cookie": "^0.4.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -24,11 +23,14 @@
     "nuxt": "^2.14.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-transform-runtime": "^7.11.5",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/runtime-corejs3": "^7.11.2",
+    "@babel/core": "^7.12.0",
+    "@babel/plugin-transform-runtime": "^7.12.0",
+    "@babel/preset-env": "^7.12.0",
+    "@babel/runtime-corejs3": "^7.12.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@nuxt/babel-preset-app": "^2.14.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@vue/test-utils": "^1.1.0",
     "babel-core": "^6.26.3",
@@ -36,9 +38,8 @@
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
     "core-js": "^3.6.5",
-    "dotenv": "^8.2.0",
     "es6-promise": "^4.2.8",
-    "eslint": "^7.10.0",
+    "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-loader": "^4.0.2",
@@ -50,7 +51,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^7.0.1",
     "husky": "^4.3.0",
-    "jest": "^26.4.2",
+    "jest": "^26.5.3",
     "jest-serializer-vue": "^2.0.2",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.0.0",
@@ -59,12 +60,17 @@
     "pre-commit": "^1.2.2",
     "prettier": "2.1.2",
     "sass-loader": "^10.0.2",
-    "vue-eslint-parser": "^7.1.0",
+    "vue-eslint-parser": "^7.1.1",
     "vue-jest": "^3.0.7",
     "vue-loading-skeleton": "^1.1.9"
   },
   "jest": {
     "verbose": true,
     "rootDir": "src"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
