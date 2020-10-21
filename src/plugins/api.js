@@ -20,8 +20,8 @@ export default (ctx, inject) => {
     hasActionHandler (actionHandler) {
       return actionHandler in this._actions
     },
-    api (apiMethod, payload, shouldDispatch = false) {
-      return this.dispatch('api', { apiMethod, payload, shouldDispatch }, { root: true })
+    api (apiMethod, payload, type = 'POST', shouldDispatch = false) {
+      return this.dispatch('api', { apiMethod, payload, type, shouldDispatch }, { root: true })
     }
   })
 

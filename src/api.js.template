@@ -4,10 +4,11 @@ export default function (store) {
     resources.forEach((resource) => { %><%= `\n  ${resource}` %>: {<%
       const methods = Object.keys(options.api[resource])
       methods.forEach((method, m) => { %>
-      <%= method %>: (payload, shouldDispatch = true) => {
+      <%= method %>: (payload, type = 'POST', shouldDispatch = true) => {
         return store.dispatch('api', {
           apiMethod: '<%= resource %>.<%= method %>',
           payload,
+          type,
           shouldDispatch
         }, {
           root: true

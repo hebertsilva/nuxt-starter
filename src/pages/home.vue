@@ -36,7 +36,10 @@ export default {
     Logo
   },
   async mounted () {
-    await this.$api.example.foo()
+    const payload = {
+      id: 1
+    }
+    await this.$api.example.foo(payload)
   }
 }
 </script>

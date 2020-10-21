@@ -1,3 +1,4 @@
+import querystring from 'querystring'
 import client from './client'
 import { api, secrets } from './config'
 
@@ -18,12 +19,23 @@ function translatePath (path) {
   }
 }
 
+function genPayload (req) {
+  // eslint-disable-next-line no-unused-vars
+  const [path, query] = req.url.split('?')
+
+  if (query) {
+    return querystring.parse(query)
+  }
+
+  return req.body.payload
+}
+
 function genRequest (req, apiMethod) {
   // eslint-disable-next-line prefer-const
   let [resource, method] = apiMethod.split('/')
   method = translatePath(method)
 
-  const payload = req.body.payload
+  const payload = genPayload(req)
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
