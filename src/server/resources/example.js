@@ -1,7 +1,5 @@
 export default {
-  // GET /example/:id/
-  example (client, { payload, config = {} }) {
-    const { id } = payload.id
-    return client.get(`example/${id}/`, config)
+  foo (client, { payload, config = {} }) {
+    return client.get('b043df5a', config)
   }
 }
