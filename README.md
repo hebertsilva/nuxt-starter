@@ -38,8 +38,8 @@ Create file `.env` at project root or edit `/src/envs.js`
 
 ```bash
   SITE_URL=<url_site>
-  BASE_URL_API=<url_api>
-  BASE_URL_PROXY=<url_proxy>/api
+  API_BASE_URL=<url_api>
+  API_PROXY_BASE=<url_proxy>/api
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

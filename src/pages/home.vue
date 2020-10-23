@@ -34,10 +34,13 @@ import Logo from '~/components/Logo.vue'
 export default {
   components: {
     Logo
+  },
+  async mounted () {
+    const payload = {
+      id: 1
+    }
+    await this.$api.example.foo(payload)
   }
-  // async mounted () {
-  // const teste = await this.$api.example.example()
-  // }
 }
 </script>
 

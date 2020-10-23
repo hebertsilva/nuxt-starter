@@ -44,6 +44,7 @@ export default {
     }
   },
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/style-resources'
   ],
   styleResources: {

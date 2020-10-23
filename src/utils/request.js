@@ -1,5 +1,3 @@
-// import { resourcePermission } from './recaptcha'
-
 // translateMethodToPath converts a string like
 // service.doSomething() to service/do-something, so
 // that it can be picked up by the API middleware in server/index.js
@@ -19,7 +17,7 @@ export function getData (response) {
 
 export default async function (
   { commit, dispatch, state },
-  { apiMethod, payload, shouldDispatch = true }
+  { apiMethod, payload, type = 'POST', shouldDispatch = true }
 ) {
   commit('cleanErrors')
   commit('setRequestActive', apiMethod)
@@ -28,17 +26,22 @@ export default async function (
     const [resource, method] = apiMethod.split('.')
     const apiPath = translateMethodToPath(method)
     const requestData = {}
+    let params = {}
 
     requestData.payload = payload || {}
 
-    // Create request client-side
+    if (type === 'GET') {
+      params = payload
+    }
+
     const response = await this.$axios.request({
       url: `${resource}/${apiPath}`,
-      method: 'POST',
+      method: type,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
+      params,
       data: requestData,
       validateStatus: (status) => {
         return status >= 200 && status < 500
