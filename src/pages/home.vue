@@ -39,7 +39,7 @@ export default {
     const payload = {
       id: 1
     }
-    await this.$api.example.foo(payload)
+    await this.$api.example.foo(payload, 'GET')
   }
 }
 </script>
