@@ -26,6 +26,12 @@ Use request from API
   const { data, status } = await this.$api.[resource][method](payload) // ex: this.$api.user.me({ id: 123 })
 ```
 
+Request method in client for server `default: POST`
+
+```js
+await this.$api.[resource][method](payload, 'GET', shouldDispatch) // this.$store.$api.user.me({ id: 123 }, 'GET') 
+```
+
 Use request from Store
 
 ```js
@@ -38,8 +44,8 @@ Create file `.env` at project root or edit `/src/envs.js`
 
 ```bash
   SITE_URL=<url_site>
-  API_BASE_URL=<url_api>
-  API_PROXY_BASE=<url_proxy>/api
+  BASE_API_URL=<url_api>
+  PROXY_API_URL=<url_proxy>/api
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

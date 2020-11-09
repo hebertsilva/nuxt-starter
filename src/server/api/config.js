@@ -9,6 +9,6 @@ export const api = resourcers
 
 // Secrets keys
 export const secrets = {
-  baseUrl: envs.API_BASE_URL,
+  baseUrl: envs.BASE_API_URL,
   siteUrl: envs.SITE_URL
 }

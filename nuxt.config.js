@@ -54,7 +54,7 @@ export default {
   },
   axios: {
     credentials: true,
-    baseURL: envs.API_PROXY_BASE
+    baseURL: envs.PROXY_API_URL
   },
   loading: { color: '#fff' },
   plugins: [
