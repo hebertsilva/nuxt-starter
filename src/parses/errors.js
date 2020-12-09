@@ -2,11 +2,11 @@ export function parseErrors (errors) {
   const fieldError = {}
   let errorMethod = ''
 
-  Object.keys(errors).map((method) => {
+  Object.keys(errors).forEach((method) => {
     errorMethod = method
     const errorField = errors[method].errors || errors[method]
 
-    Object.keys(errorField).map((field) => {
+    Object.keys(errorField).forEach((field) => {
       const error = errorField[field]
 
       if (typeof error === 'object' || typeof error === 'string') {

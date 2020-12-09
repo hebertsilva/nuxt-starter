@@ -26,6 +26,7 @@ export default async function (
     const [resource, method] = apiMethod.split('.')
     const apiPath = translateMethodToPath(method)
     const requestData = {}
+
     let params = {}
 
     requestData.payload = payload || {}
