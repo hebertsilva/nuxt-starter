@@ -20,11 +20,17 @@ function translatePath (path) {
 }
 
 function genPayload (req) {
-  // eslint-disable-next-line no-unused-vars
-  const [path, query] = req.url.split('?')
+  const method = req.method
 
-  if (query) {
-    return querystring.parse(query)
+  if (method === 'GET') {
+    // eslint-disable-next-line no-unused-vars
+    const [path, query] = req.url.split('?')
+
+    if (query) {
+      return querystring.parse(query)
+    }
+
+    return {}
   }
 
   return req.body.payload
